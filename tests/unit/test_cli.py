@@ -39,3 +39,10 @@ def test_main_when_every_hacker_news_step_runs_from_fixture_prints_output(
     for step in hacker_news_steps.STEPS:
         assert cli.main(["hacker-news", step, "--source", "fixture"]) == 0
         assert capsys.readouterr().out.strip(), step
+
+
+def test_main_when_movies_markup_from_fixture_prints_heading(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    assert cli.main(["movies", "markup", "--source", "fixture"]) == 0
+    assert "<h2>" in capsys.readouterr().out
