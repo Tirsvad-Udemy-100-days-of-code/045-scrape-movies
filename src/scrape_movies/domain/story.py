@@ -24,4 +24,8 @@ def top_story(stories: Sequence[Story]) -> Story | None:
     @param stories The stories in page order.
     @return The first story with the highest score, or None when there are none.
     """
-    return max(stories, key=lambda story: story.upvotes, default=None)
+    best: Story | None = None
+    for story in stories:
+        if best is None or story.upvotes > best.upvotes:
+            best = story
+    return best
