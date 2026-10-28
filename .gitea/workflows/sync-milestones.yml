@@ -1,0 +1,55 @@
+# Publish accepted milestones to the git host.
+#
+# Triggers: a push to main that changes docs/milestones/ or docs/sqa/reviews/,
+# and a manual run (dry run by default). It runs the framework's
+# ci-publish-milestones.sh, which creates or updates the Milestone and the
+# Issues of every milestone that is Accepted with a Go review. Nothing is closed
+# or deleted. Secret: TOKEN_FOR_GITEA_SYNC (a Gitea token with read and write on
+# issues; S01 creates it in the repository settings). Changes outside the
+# repository: Milestones and Issues on the git host. Copied from
+# framework/templates/ci/sync-milestones.yml; implements MIL-001.
+
+name: Publish accepted milestones
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/milestones/**"
+      - "docs/sqa/reviews/**"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview only: print the plan and create nothing"
+        type: boolean
+        default: true
+
+concurrency:
+  group: publish-accepted-milestones
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the project and its framework submodule
+        uses: actions/checkout@v4.2.2
+        with:
+          submodules: recursive
+          token: ${{ secrets.TOKEN_FOR_GITEA_SYNC }}
+
+      - name: Make sure curl and jq are available
+        run: bash framework/scripts/ci-publish-milestones.sh ensure-tools
+
+      - name: Publish accepted milestones
+        env:
+          # Gitea reads GITEA_TOKEN, GitHub's gh reads GH_TOKEN; both come from
+          # the one secret named above.
+          GITEA_TOKEN: ${{ secrets.TOKEN_FOR_GITEA_SYNC }}
+          GH_TOKEN: ${{ secrets.TOKEN_FOR_GITEA_SYNC }}
+          # Empty on a push (a real run); "true" or "false" on a manual run.
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: bash framework/scripts/ci-publish-milestones.sh publish
