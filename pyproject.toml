@@ -21,6 +21,7 @@ dev = [
     "ruff>=0.6",
     "mypy>=1.11",
     "types-requests>=2.32",
+    "pillow>=10.4",
 ]
 
 [tool.setuptools.packages.find]
@@ -46,3 +47,7 @@ ignore = ["D203", "D213"]
 strict = true
 python_version = "3.13"
 mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = ["bs4.*", "requests.*", "PIL.*", "pytest.*"]
+ignore_missing_imports = true
