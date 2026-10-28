@@ -39,18 +39,21 @@ def capture_page(url: str, target: Path) -> Path:
     @return The path of the PNG.
     """
     target.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        [
-            find_browser(),
-            "--headless=new",
-            "--disable-gpu",
-            "--hide-scrollbars",
-            f"--window-size={WINDOW}",
-            f"--screenshot={target}",
-            url,
-        ],
-        check=True,
-        capture_output=True,
-        timeout=120,
-    )
-    return target
+    browser = find_browser()
+    for mode in ("new", "old"):
+        result = subprocess.run(
+            [
+                browser,
+                f"--headless={mode}",
+                "--disable-gpu",
+                "--hide-scrollbars",
+                f"--window-size={WINDOW}",
+                f"--screenshot={target}",
+                url,
+            ],
+            capture_output=True,
+            timeout=120,
+        )
+        if result.returncode == 0 and target.exists():
+            return target
+    raise RuntimeError(f"The browser could not capture {url}")
