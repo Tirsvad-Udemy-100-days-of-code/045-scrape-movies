@@ -35,3 +35,6 @@ MOVIES_OUTPUT_FILE: str = "movies.txt"
 
 ## The saved copy of the course's Hacker News page, used offline.
 HACKER_NEWS_FIXTURE_PATH: Path = FIXTURES_DIR / "hacker_news.html"
+
+## The saved headings of the live Empire page, used offline.
+EMPIRE_FIXTURE_PATH: Path = FIXTURES_DIR / "empire_live_excerpt.html"

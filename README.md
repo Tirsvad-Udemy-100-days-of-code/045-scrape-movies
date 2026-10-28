@@ -161,6 +161,52 @@ A short summary in our own words; it is not legal advice.
 - **Commercial use** of scraped data invites expensive disputes even where the scraping itself was allowed.
 - **Be a good guest:** prefer an official API when there is one, read the site's `robots.txt` to see what it allows, and send at most one request a minute. This project fetches one page per run and identifies itself with a `User-Agent`.
 
+### Project: 100 movies to watch
+
+The assignment: scrape Empire's "100 Greatest Movies" and write `movies.txt` with the titles numbered from `1)` upwards. The code is `infrastructure/empire_movies.py` (parsing), `domain/movie.py` (reverse and number) and `infrastructure/movie_file.py` (writing). `--source wayback` (default) reads the Internet Archive snapshot of May 2020 that the assignment pins, `--source live` reads the current Empire page and `--source fixture` reads the saved headings in `tests/fixtures/`.
+
+**1. Choose the page** (the saved headings of the page)
+
+![Step 1: the page](docs/images/movies-1-page.png)
+
+**2. Inspect the markup** (the 2020 page has `<h3 class="title">`; the current page has `<h2><strong>` headings that start with a rank)
+
+```bash
+python -m scrape_movies movies markup
+```
+
+![Step 2: markup](docs/images/movies-2-markup.png)
+
+**3. Titles in page order** (`select("h3.title")` and a list comprehension over `get_text()`; the page counts down from 100)
+
+```bash
+python -m scrape_movies movies titles
+```
+
+![Step 3: titles](docs/images/movies-3-titles.png)
+
+**4. Reverse the list** (`titles[::-1]`, so the list counts up from 1)
+
+```bash
+python -m scrape_movies movies reversed
+```
+
+![Step 4: reversed](docs/images/movies-4-reversed.png)
+
+**5. Write `movies.txt`** (a `with open(...)` block, one title per line)
+
+```bash
+python -m scrape_movies movies write
+```
+
+![Step 5: write](docs/images/movies-5-write.png)
+
+**6. The result**
+
+![Step 6: movies.txt](docs/images/movies-6-file.png)
+
+The committed [`movies.txt`](./movies.txt) was produced with `--source fixture` on 2026-10-28 from the current Empire list, so its ranking differs from the 2020 list in the lecture video. The Internet Archive answered `429 Too Many Requests` while this project was built, so the snapshot is read live only; its `h3.title` layout is covered by a hand-written sample in the tests.
+
 ## 🧪 Tests
 
 ```bash

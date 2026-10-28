@@ -2,8 +2,9 @@
 
 import argparse
 from collections.abc import Sequence
+from pathlib import Path
 
-from scrape_movies.presentation import hacker_news_steps, soup_steps
+from scrape_movies.presentation import hacker_news_steps, movies_steps, soup_steps
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -26,6 +27,17 @@ def build_parser() -> argparse.ArgumentParser:
         default="mirror",
         help="the course mirror (default), the live site or the saved copy",
     )
+    movies = commands.add_parser("movies", help="scrape Empire's 100 greatest movies")
+    movies.add_argument("step", choices=movies_steps.STEPS)
+    movies.add_argument(
+        "--source",
+        choices=movies_steps.SOURCES,
+        default="wayback",
+        help="the Wayback snapshot (default), the live site or the saved copy",
+    )
+    movies.add_argument(
+        "--output", type=Path, help="file written by the write step (movies.txt)"
+    )
     return parser
 
 
@@ -42,6 +54,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
     if args.command == "hacker-news":
         print(hacker_news_steps.render_step(args.step, args.source))
+        return 0
+    if args.command == "movies":
+        print(movies_steps.render_step(args.step, args.source, args.output))
         return 0
     parser.print_help()
     return 0

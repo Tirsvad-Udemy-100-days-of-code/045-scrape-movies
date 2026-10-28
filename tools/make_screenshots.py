@@ -29,10 +29,20 @@ STEPS: dict[str, list[str]] = {
     "hn-4-links": ["hacker-news", "links"],
     "hn-5-upvotes": ["hacker-news", "upvotes"],
     "hn-6-top": ["hacker-news", "top"],
+    "movies-2-markup": ["movies", "markup", "--source", "fixture"],
+    "movies-3-titles": ["movies", "titles", "--source", "fixture"],
+    "movies-4-reversed": ["movies", "reversed", "--source", "fixture"],
+    "movies-5-write": ["movies", "write", "--source", "fixture"],
 }
+## Screenshots of a file's first lines: image name, file and number of lines.
+FILES: dict[str, tuple[str, int]] = {"movies-6-file": ("movies.txt", 15)}
 ## Screenshots of real web pages: image name and the address of the page.
 PAGES: dict[str, str] = {
     "hn-1-page": "https://appbrewery.github.io/news.ycombinator.com/",
+    # The live page opens a consent wall, so the saved headings are drawn instead.
+    "movies-1-page": (
+        ROOT / "tests" / "fixtures" / "empire_live_excerpt.html"
+    ).as_uri(),
 }
 
 
@@ -63,6 +73,13 @@ def main() -> None:
     for name, args in STEPS.items():
         if name.startswith(prefix):
             print(capture(name, args))
+    for name, (file_name, count) in FILES.items():
+        if name.startswith(prefix):
+            text = (ROOT / file_name).read_text(encoding="utf-8")
+            target = IMAGES / f"{name}.png"
+            shown = os.linesep.join(text.splitlines()[:count])
+            render(f"head -n {count} {file_name}", shown, target)
+            print(target)
     for name, url in PAGES.items():
         if name.startswith(prefix):
             print(capture_page(url, IMAGES / f"{name}.png"))
