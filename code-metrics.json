@@ -1,0 +1,14 @@
+{
+  "blank": 9,
+  "comment": 11,
+  "files": 7,
+  "languages": {
+    "Python": {
+      "blank": 9,
+      "comment": 11,
+      "files": 7,
+      "lines": 25
+    }
+  },
+  "lines": 25
+}
