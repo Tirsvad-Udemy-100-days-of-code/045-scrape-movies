@@ -56,11 +56,53 @@ Leave out `[dev]` to install only the runtime dependencies. Personal tokens belo
 
 ## ▶️ Run
 
-The lecture steps are added milestone by milestone; each gets a section with its command, its output and a screenshot here.
+Every lecture step is a command of the form `python -m scrape_movies <lecture> <step>`; without arguments the help is printed. Each step below shows the command, what it teaches and a screenshot of its output.
+
+### Lecture: Parsing HTML and making soup
+
+The sample page is `tests/fixtures/website.html`; the code is `src/scrape_movies/infrastructure/soup_basics.py`.
+
+**1. Create a soup and read the title** (`BeautifulSoup(html, "html.parser")`, `soup.title.string`)
 
 ```bash
-python -m scrape_movies   # available from the movies milestone
+python -m scrape_movies soup title
 ```
+
+![Step 1: soup title](docs/images/soup-1-title.png)
+
+**2. Prettify** (`soup.prettify()` indents one tag per line)
+
+```bash
+python -m scrape_movies soup prettify
+```
+
+![Step 2: prettify](docs/images/soup-2-prettify.png)
+
+**3. Find all tags** (`find_all("a")`, then `get_text()` and `get("href")` in a loop)
+
+```bash
+python -m scrape_movies soup find-all
+```
+
+![Step 3: find_all](docs/images/soup-3-find-all.png)
+
+**4. Find by id and by class** (`find(id=...)`, `find_all("h3", class_=...)`; `class_` because `class` is a Python keyword)
+
+```bash
+python -m scrape_movies soup find
+```
+
+![Step 4: find by attribute](docs/images/soup-4-find.png)
+
+**5. CSS selectors** (`select_one("p a")` and `select(".heading")`)
+
+```bash
+python -m scrape_movies soup select
+```
+
+![Step 5: select](docs/images/soup-5-select.png)
+
+The screenshots are made by `python tools/make_screenshots.py`, which renders the command output as an image; no desktop is captured.
 
 ## 🧪 Tests
 
