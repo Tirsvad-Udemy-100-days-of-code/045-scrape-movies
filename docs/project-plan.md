@@ -30,11 +30,11 @@ Schedule the five gateways that deliver the Day 45 scraping repository. The Busi
 
 | Gateway | Document | Window | Decision date | Owner | Stories | Main deliverable | Milestone |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Repository Setup | [MIL-001] | 2026-10-28 to 2026-10-30 | 2026-10-30 | S01 | none (technical tasks) | Repository metadata, configuration, README, CI | not yet synced |
-| Parsing HTML | [MIL-002] | 2026-10-31 to 2026-11-03 | 2026-11-03 | S01 | none (technical tasks) | `soup_basics` module, tests, screenshots | not yet synced |
-| Hacker News | [MIL-003] | 2026-11-04 to 2026-11-06 | 2026-11-06 | S01 | none (technical tasks) | `hacker_news` module, ethics note, screenshots | not yet synced |
-| Top 100 Movies | [MIL-004] | 2026-11-07 to 2026-11-10 | 2026-11-10 | S01 | none (technical tasks) | `movies` module and `movies.txt`, screenshots | not yet synced |
-| Wiki | [MIL-005] | 2026-11-11 to 2026-11-14 | 2026-11-14 | S01 | none (technical tasks) | Wiki in en, da, ms | not yet synced |
+| Repository Setup | [MIL-001] | 2026-10-28 to 2026-10-30 | 2026-10-30 | S01 | none (technical tasks) | Repository metadata, configuration, README, CI | [Milestone 259](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/045-scrape-movies/milestone/259) (closed) |
+| Parsing HTML | [MIL-002] | 2026-10-31 to 2026-11-03 | 2026-11-03 | S01 | none (technical tasks) | `soup_basics` module, tests, screenshots | [Milestone 260](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/045-scrape-movies/milestone/260) (closed) |
+| Hacker News | [MIL-003] | 2026-11-04 to 2026-11-06 | 2026-11-06 | S01 | none (technical tasks) | `hacker_news` module, ethics note, screenshots | [Milestone 261](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/045-scrape-movies/milestone/261) (closed) |
+| Top 100 Movies | [MIL-004] | 2026-11-07 to 2026-11-10 | 2026-11-10 | S01 | none (technical tasks) | `movies` module and `movies.txt`, screenshots | [Milestone 262](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/045-scrape-movies/milestone/262) (closed) |
+| Wiki | [MIL-005] | 2026-11-11 to 2026-11-14 | 2026-11-14 | S01 | none (technical tasks) | Wiki in en, da, ms | [Milestone 263](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/045-scrape-movies/milestone/263) (closed) |
 
 ```plantuml
 @startgantt
