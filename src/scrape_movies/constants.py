@@ -32,3 +32,6 @@ EMPIRE_LIVE_URL: str = "https://www.empireonline.com/movies/features/best-movies
 
 ## File the movie list is written to.
 MOVIES_OUTPUT_FILE: str = "movies.txt"
+
+## The saved copy of the course's Hacker News page, used offline.
+HACKER_NEWS_FIXTURE_PATH: Path = FIXTURES_DIR / "hacker_news.html"
