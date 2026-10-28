@@ -154,7 +154,13 @@ python -m scrape_movies hacker-news top
 
 ### Lecture: Is web scraping legal and ethical?
 
-A short summary in our own words; it is not legal advice.
+A short summary in our own words; it is not legal advice. Reading the site's `robots.txt` comes first:
+
+```bash
+curl https://news.ycombinator.com/robots.txt
+```
+
+![Ethics step 1: robots.txt](docs/images/ethics-1-robots.png)
 
 - **Public, non-copyrighted data** is generally fine to read. Court cases such as Genius v. Google and hiQ v. LinkedIn show that the line is not simple.
 - **Copyrighted content** (a video, a blog post) must not be copied, and **data behind a login** is covered by the site's user agreement, so do not scrape it.
@@ -222,7 +228,7 @@ See [LICENSE](./LICENSE).
 ## 🔗 Links
 
 - [Repository][repository]
-- [Documentation][documentation]
+- [Documentation][documentation]: wiki in [English](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/045-scrape-movies/wiki/Home), [Dansk](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/045-scrape-movies/wiki/Home-da) and [Bahasa Melayu](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/045-scrape-movies/wiki/Home-ms); the pages are in `docs/wiki/`
 - [Issue tracker][issues]
 
 ## 📎 Appendix: Project documents
