@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-28 | Proposed | Jens Tirsvad Nielsen | S01 (AI as stand-in, autonomous mode) | Initial version | pending |
+| 2026-10-28 | Proposed | Jens Tirsvad Nielsen | S01 (AI as stand-in, autonomous mode) | Initial version | [02c339c] |
 
 ---
 
@@ -60,3 +60,4 @@ Go — no Mandatory criterion fails and none is Pending. Stand-in review in auto
 
 [MIL-004]: ../../milestones/mil-004-top-100-movies.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[02c339c]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/045-scrape-movies/commit/02c339c2dbe95b0e2eff5e4a3738f6e946014d26
