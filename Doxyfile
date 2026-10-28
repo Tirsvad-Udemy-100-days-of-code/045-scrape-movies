@@ -1,0 +1,16 @@
+# Doxygen configuration. Run `doxygen Doxyfile` from the repository root;
+# the HTML pages are written to docs/api/html (ignored by git).
+PROJECT_NAME           = "scrape-movies"
+PROJECT_BRIEF          = "Day 45 of 100 Days of Code: web scraping with BeautifulSoup"
+OUTPUT_DIRECTORY       = docs/api
+INPUT                  = src README.md
+FILE_PATTERNS          = *.py *.md
+RECURSIVE              = YES
+USE_MDFILE_AS_MAINPAGE = README.md
+OPTIMIZE_OUTPUT_JAVA   = YES
+EXTRACT_ALL            = YES
+AUTOLINK_SUPPORT       = YES
+JAVADOC_AUTOBRIEF      = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+QUIET                  = YES
