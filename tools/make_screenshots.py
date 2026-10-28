@@ -7,6 +7,7 @@ The images are written to docs/images/ and used by the README and the wiki.
 import os
 import subprocess
 import sys
+import urllib.request
 from pathlib import Path
 
 from capture_page import capture_page
@@ -36,6 +37,8 @@ STEPS: dict[str, list[str]] = {
 }
 ## Screenshots of a file's first lines: image name, file and number of lines.
 FILES: dict[str, tuple[str, int]] = {"movies-6-file": ("movies.txt", 15)}
+## Screenshots of a small text page: image name and the address of the page.
+ROBOTS: dict[str, str] = {"ethics-1-robots": "https://news.ycombinator.com/robots.txt"}
 ## Screenshots of real web pages: image name and the address of the page.
 PAGES: dict[str, str] = {
     "hn-1-page": "https://appbrewery.github.io/news.ycombinator.com/",
@@ -67,6 +70,25 @@ def capture(name: str, args: list[str]) -> Path:
     return target
 
 
+def capture_text(name: str, url: str) -> Path:
+    """@brief Download a small text file once and draw it like `curl` output.
+
+    Reading `robots.txt` is the first thing a polite scraper does.
+
+    @param name The image name without extension.
+    @param url The address of the text file.
+    @return The path of the PNG.
+    """
+    from scrape_movies.constants import USER_AGENT
+
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(request, timeout=30) as response:  # noqa: S310
+        text = response.read().decode("utf-8")
+    target = IMAGES / f"{name}.png"
+    render(f"curl {url}", text, target)
+    return target
+
+
 def main() -> None:
     """@brief Capture every step whose name starts with the given prefix."""
     prefix = sys.argv[1] if len(sys.argv) > 1 else ""
@@ -80,6 +102,9 @@ def main() -> None:
             shown = os.linesep.join(text.splitlines()[:count])
             render(f"head -n {count} {file_name}", shown, target)
             print(target)
+    for name, url in ROBOTS.items():
+        if name.startswith(prefix):
+            print(capture_text(name, url))
     for name, url in PAGES.items():
         if name.startswith(prefix):
             print(capture_page(url, IMAGES / f"{name}.png"))
