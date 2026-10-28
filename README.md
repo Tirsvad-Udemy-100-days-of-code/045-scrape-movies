@@ -104,6 +104,63 @@ python -m scrape_movies soup select
 
 The screenshots are made by `python tools/make_screenshots.py`, which renders the command output as an image; no desktop is captured.
 
+### Lecture: Scraping Hacker News
+
+The code is `src/scrape_movies/infrastructure/hacker_news.py` (parsing) and `http_client.py` (one `requests.get` with a timeout and a `User-Agent`). By default the commands read the course's static copy of the front page, `--source live` reads <https://news.ycombinator.com/news> and `--source fixture` reads the saved copy in `tests/fixtures/` without any network.
+
+**1. Look at the page you will scrape** (live data instead of a local file)
+
+![Step 1: the page](docs/images/hn-1-page.png)
+
+**2. Inspect the markup** (browser developer tools show the tags to look for: a story row `tr.athing`, its title link `.titleline > a`, and a `span.score` in the next row)
+
+```bash
+python -m scrape_movies hacker-news markup
+```
+
+![Step 2: markup](docs/images/hn-2-markup.png)
+
+**3. Titles** (`find_all` on the title links, then `get_text()`)
+
+```bash
+python -m scrape_movies hacker-news titles
+```
+
+![Step 3: titles](docs/images/hn-3-titles.png)
+
+**4. Links** (`get("href")` of the same anchors)
+
+```bash
+python -m scrape_movies hacker-news links
+```
+
+![Step 4: links](docs/images/hn-4-links.png)
+
+**5. Upvotes** (the text `38 points` is split and converted with `int()` so it can be compared)
+
+```bash
+python -m scrape_movies hacker-news upvotes
+```
+
+![Step 5: upvotes](docs/images/hn-5-upvotes.png)
+
+**6. The top story** (Python's `max` over the upvotes)
+
+```bash
+python -m scrape_movies hacker-news top
+```
+
+![Step 6: top story](docs/images/hn-6-top.png)
+
+### Lecture: Is web scraping legal and ethical?
+
+A short summary in our own words; it is not legal advice.
+
+- **Public, non-copyrighted data** is generally fine to read. Court cases such as Genius v. Google and hiQ v. LinkedIn show that the line is not simple.
+- **Copyrighted content** (a video, a blog post) must not be copied, and **data behind a login** is covered by the site's user agreement, so do not scrape it.
+- **Commercial use** of scraped data invites expensive disputes even where the scraping itself was allowed.
+- **Be a good guest:** prefer an official API when there is one, read the site's `robots.txt` to see what it allows, and send at most one request a minute. This project fetches one page per run and identifies itself with a `User-Agent`.
+
 ## 🧪 Tests
 
 ```bash
