@@ -1,0 +1,23 @@
+# English comments: fails a pull request that adds a comment or docstring that
+# is not English (the project's language rule for source code).
+#
+# Triggers: every pull request. Calls the reusable workflow of
+# TirSystem/git-workflows at the major tag v2 (same organisation). It changes
+# no file, needs no secret and writes one comment on the pull request.
+# Implements MIL-001. Verified on the Gitea instance git.tirsystem.com.
+name: English comments
+
+on:
+  pull_request:
+
+concurrency:
+  group: english-comments-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  english-comments:
+    name: Comments are English
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: TirSystem/git-workflows/.gitea/workflows/english-comments.yml@v2

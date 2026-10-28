@@ -1,0 +1,54 @@
+# Tests and code metrics.
+#
+# Triggers: every pull request (tests only) and every push to main (tests, then
+# size and coverage badges). The tests run offline. Needs no secret. The metrics
+# job commits three SVG badges to the badges branch of this repository through
+# the reusable workflow of TirSystem/git-workflows at the major tag v2 (same
+# organisation). Implements MIL-001. Verified on git.tirsystem.com.
+name: Tests and code metrics
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Run pytest with coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4.2.2
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version: "3.13"
+      - name: Install the project and its test tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+      - name: Run the tests offline
+        run: python -m pytest --cov=scrape_movies --cov-report=xml
+      - name: Keep the coverage report
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: coverage
+          path: coverage.xml
+
+  metrics:
+    name: Code metrics badges
+    if: ${{ github.event_name == 'push' }}
+    needs: tests
+    permissions:
+      contents: write
+    uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2
+    with:
+      coverage-artifact: coverage
+      coverage-report: coverage.xml
