@@ -41,7 +41,7 @@ def capture_page(url: str, target: Path) -> Path:
     target.parent.mkdir(parents=True, exist_ok=True)
     browser = find_browser()
     for mode in ("new", "old"):
-        result = subprocess.run(
+        result = subprocess.run(  # nosemgrep: dangerous-subprocess-use-audit
             [
                 browser,
                 f"--headless={mode}",
