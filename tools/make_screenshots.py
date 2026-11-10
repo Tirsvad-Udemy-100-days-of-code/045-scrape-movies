@@ -56,7 +56,7 @@ def capture(name: str, args: list[str]) -> Path:
     @param args The arguments for `python -m scrape_movies`.
     @return The path of the PNG.
     """
-    result = subprocess.run(
+    result = subprocess.run(  # nosemgrep: dangerous-subprocess-use-audit
         [sys.executable, "-m", "scrape_movies", *args],
         cwd=ROOT,
         env={**os.environ, "PYTHONIOENCODING": "utf-8"},
